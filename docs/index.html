@@ -1,25 +1,540 @@
 <!DOCTYPE html>
-<html lang="zh"><head>
+<html lang="zh">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<meta http-equiv="refresh" content="60">
-<title>爆款雷达 · 还在加载</title>
+<title>Beauty & Skincare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
-       background:#0a0d13;color:#e8e8ea;text-align:center;padding:24px;
-       font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
-  .spin{width:34px;height:34px;margin:0 auto 26px;border:3px solid #2a2f3a;
-        border-top-color:#ff785a;border-radius:50%;animation:s 1s linear infinite}
-  @keyframes s{to{transform:rotate(360deg)}}
-  h1{font-size:23px;margin:0 0 14px;font-weight:600}
-  p{margin:8px 0;color:#9a9aa2;font-size:15px;line-height:1.75}
-  .hint{margin-top:30px;font-size:13.5px;color:#6e6e78}
-  @media(prefers-reduced-motion:reduce){.spin{animation:none}}
-</style></head><body><div>
-  <div class="spin"></div>
-  <h1>你的页面还在加载中,请稍等</h1>
-  <p>第一次大约需要 20-60 分钟。</p>
-  <p>这一页会自己刷新,你可以先去忙别的。</p>
-  <p class="hint">等很久都没变?回到安装 SOP 第 7 步,<br>到仓库的 Actions 看 Sync Content 有没有跑完。</p>
-</div></body></html>
+  :root {
+    --bg: #0a0d13;
+    --card: #11151d;
+    --card-hi: #151a24;
+    --border: #1d2430;
+    --border-hi: #2c3546;
+    --text: #e8ecf3;
+    --muted: #8a94a6;
+    --faint: #5b6577;
+    --accent: #5ea1ff;
+    --green: #3fd68f;
+    --orange: #f0a33f;
+    --pink: #ff6b9d;
+    --red: #ff5c5c;
+    --fire1: #ff8a3d;
+    --fire2: #ff4d6d;
+    --font: 'Inter', -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --disp: 'Space Grotesk', 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scrollbar-color: #232c3b var(--bg); }
+  body { background: var(--bg); color: var(--text); font-family: var(--font);
+    -webkit-font-smoothing: antialiased; }
+  ::selection { background: rgba(94,161,255,.3); }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #232c3b; border-radius: 8px; }
+  ::-webkit-scrollbar-thumb:hover { background: #2c3546; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+  .ic { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round; fill: none; flex: none; }
+
+  header { position: sticky; top: 0; z-index: 50; background: rgba(10,13,19,.86);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border); padding: 13px 20px 12px; }
+  .hrow { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; max-width: 1440px; margin: 0 auto; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+  .mark { width: 31px; height: 31px; border-radius: 9px; display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--fire1), var(--fire2));
+    box-shadow: 0 4px 16px rgba(255,92,80,.35); }
+  .mark .ic { width: 17px; height: 17px; color: #fff; }
+  h1 { font-family: var(--disp); font-size: 16.5px; font-weight: 700; letter-spacing: .2px; white-space: nowrap; line-height: 1.15; }
+  h1 small { display: block; color: var(--faint); font-family: var(--font); font-weight: 400;
+    font-size: 10.5px; letter-spacing: 0; }
+
+  .search { position: relative; }
+  .search > .ic { position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
+    color: var(--faint); width: 13.5px; pointer-events: none; }
+  input#fSearch { background: var(--card); color: var(--text); border: 1px solid var(--border);
+    border-radius: 10px; padding: 8px 12px 8px 32px; font-size: 13px; font-family: var(--font);
+    width: 200px; transition: border-color .18s, background .18s; }
+  input#fSearch:hover { border-color: var(--border-hi); }
+  input#fSearch:focus { border-color: var(--accent); outline: none; }
+  input#fSearch::placeholder { color: var(--faint); }
+
+  select, .btn { background: var(--card); color: var(--text); border: 1px solid var(--border);
+    border-radius: 10px; padding: 8px 11px; font-size: 13px; font-family: var(--font);
+    cursor: pointer; transition: border-color .18s, background .18s, color .18s;
+    display: inline-flex; align-items: center; gap: 6px; }
+  select:hover, .btn:hover { border-color: var(--border-hi); background: var(--card-hi); }
+  .btn:active { transform: scale(.97); }
+  .btn.on { border-color: var(--accent); color: var(--accent); background: rgba(94,161,255,.08); }
+
+  .tabs { display: flex; gap: 7px; flex-wrap: wrap; max-width: 1440px; margin: 12px auto 0; }
+  .tab { display: inline-flex; align-items: center; gap: 7px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 999px; padding: 6.5px 14px;
+    font-size: 13px; color: var(--muted); cursor: pointer; user-select: none;
+    transition: border-color .18s, background .18s, color .18s, transform .18s; }
+  .tab:hover { border-color: var(--border-hi); color: var(--text); }
+  .tab .cnt { font-family: var(--disp); font-weight: 600; font-size: 11px;
+    background: rgba(255,255,255,.06); padding: 1.5px 7.5px; border-radius: 99px;
+    font-variant-numeric: tabular-nums; }
+  .tab.on { color: var(--text);
+    background: linear-gradient(135deg, rgba(255,138,61,.15), rgba(255,77,109,.15));
+    border-color: rgba(255,120,90,.45); }
+  .tab.on .cnt { background: rgba(255,120,90,.25); }
+  body.dragging .tab.droppable { border-style: dashed; border-color: var(--accent); }
+  .tab.over { background: rgba(94,161,255,.22); color: var(--text); transform: scale(1.07); }
+
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; max-width: 1440px; margin: 9px auto 0; align-items: center; }
+  .chips .lbl { font-size: 12px; color: var(--faint); margin-right: 2px; }
+  .chip2 { display: inline-flex; align-items: center; gap: 5.5px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 999px; padding: 4.5px 12px;
+    font-size: 12px; color: var(--muted); cursor: pointer; user-select: none;
+    transition: border-color .18s, color .18s, background .18s;
+    font-variant-numeric: tabular-nums; }
+  .chip2 .ic { width: 12.5px; height: 12.5px; }
+  .chip2:hover { border-color: var(--border-hi); color: var(--text); }
+  .chip2.on { border-color: rgba(240,163,63,.6); color: var(--orange); background: rgba(240,163,63,.08); }
+
+  main { max-width: 1440px; margin: 22px auto; padding: 0 20px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(305px, 1fr)); gap: 18px; }
+
+  .card { position: relative; background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;
+    transition: transform .22s cubic-bezier(.2,.7,.3,1), border-color .22s, box-shadow .22s;
+    animation: fadeUp .45s cubic-bezier(.2,.7,.3,1) both; }
+  .card:hover { transform: translateY(-3px); border-color: var(--border-hi);
+    box-shadow: 0 12px 32px rgba(0,0,0,.45); }
+  .card.outlier::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--fire1), var(--fire2)); z-index: 2; }
+  .card[draggable] { cursor: grab; }
+  .card.lifting { opacity: .45; }
+  .card.saved { border-color: var(--green); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  .embed { position: relative; width: 100%; aspect-ratio: 4/5; background: #080b10; }
+  .embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .embed .ph { position: absolute; inset: 0; display: grid; place-items: center;
+    background: linear-gradient(110deg, #0b0e15 8%, #121826 18%, #0b0e15 33%);
+    background-size: 200% 100%; animation: shimmer 1.5s linear infinite; }
+  .embed .ph .ic { width: 30px; height: 30px; color: #2a3342; stroke-width: 1.6; }
+  @keyframes shimmer { to { background-position-x: -200%; } }
+
+  .meta { padding: 13px 15px 14px; display: flex; flex-direction: column; gap: 9px; }
+  .row1 { display: flex; align-items: center; gap: 7px; font-size: 13px; flex-wrap: wrap; }
+  .handle { color: #3a4456; cursor: grab; display: inline-flex; }
+  .handle .ic { width: 13px; height: 13px; }
+  .who { font-weight: 600; color: var(--accent); text-decoration: none; }
+  .who:hover { text-decoration: underline; }
+  .badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 500;
+    padding: 2.5px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); }
+  .badge .ic { width: 10.5px; height: 10.5px; }
+  .badge.bnew { color: var(--pink); border-color: rgba(255,107,157,.45); background: rgba(255,107,157,.07); }
+  .badge.bhorse { color: var(--orange); border-color: rgba(240,163,63,.45); background: rgba(240,163,63,.07); }
+  .badge.bbait { color: var(--accent); border-color: rgba(94,161,255,.4); background: rgba(94,161,255,.07); }
+  .date { margin-left: auto; color: var(--faint); font-size: 11px; font-variant-numeric: tabular-nums; }
+
+  .nums { display: flex; gap: 6px; flex-wrap: wrap; }
+  .num { display: inline-flex; align-items: center; gap: 5px; background: #0c0f16;
+    border: 1px solid var(--border); border-radius: 9px; padding: 5px 9px;
+    font-size: 11px; color: var(--muted); }
+  .num .ic { width: 11.5px; height: 11.5px; }
+  .num b { font-family: var(--disp); color: var(--text); font-size: 12.5px; font-weight: 600;
+    font-variant-numeric: tabular-nums; }
+  .num.hot { border-color: rgba(255,122,77,.35); }
+  .num.hot .ic, .num.hot b { color: #ff7a4d; }
+  .num.x { border-color: rgba(240,163,63,.35); }
+  .num.x .ic, .num.x b { color: var(--orange); }
+  .num.er .ic, .num.er b { color: var(--green); }
+
+  .cap { color: var(--muted); font-size: 12.5px; line-height: 1.55; display: -webkit-box;
+    -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; }
+  .cap.open { -webkit-line-clamp: unset; }
+  .cap b { color: var(--text); font-weight: 600; }
+  .ai { border-left: 2px solid var(--orange); background: rgba(240,163,63,.06);
+    padding: 8px 11px; border-radius: 0 10px 10px 0; font-size: 12px; line-height: 1.65;
+    color: var(--muted); }
+  .ai b { color: var(--orange); font-weight: 600; }
+  .mine { border-left: 2px solid var(--green); background: rgba(63,214,143,.06);
+    padding: 8px 11px; border-radius: 0 10px 10px 0; font-size: 12px; line-height: 1.65;
+    color: var(--muted); cursor: pointer; display: -webkit-box; -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical; overflow: hidden; white-space: pre-wrap; }
+  .mine.open { -webkit-line-clamp: unset; }
+  .mine b { color: var(--green); font-weight: 600; }
+
+  .srow { display: flex; align-items: center; gap: 7px; }
+  .srow label { font-size: 12px; color: var(--faint); }
+  .status { flex: 1; padding: 6px 9px; font-size: 12.5px; }
+  .status.s未处理 { color: var(--muted); }
+  .status.s拍摄中 { color: var(--orange); border-color: rgba(240,163,63,.5); }
+  .status.s已处理 { color: var(--green); border-color: rgba(63,214,143,.5); }
+  .status.s跳过 { color: var(--red); border-color: rgba(255,92,92,.5); }
+  .abtn { display: inline-flex; align-items: center; gap: 5px; background: #0c0f16;
+    color: var(--muted); border: 1px solid var(--border); border-radius: 9px;
+    padding: 6px 10px; font-size: 11.5px; font-family: var(--font); cursor: pointer;
+    text-decoration: none; transition: color .18s, border-color .18s, transform .1s; }
+  .abtn .ic { width: 12px; height: 12px; }
+  .abtn:hover { color: var(--accent); border-color: rgba(94,161,255,.5); }
+  .abtn:active { transform: scale(.95); }
+
+  .more { text-align: center; margin: 28px 0 44px; }
+  .more button { background: var(--card); color: var(--accent); border: 1px solid var(--border);
+    border-radius: 12px; padding: 11px 30px; font-size: 14px; font-family: var(--font);
+    cursor: pointer; transition: border-color .18s, background .18s; }
+  .more button:hover { border-color: var(--border-hi); background: var(--card-hi); }
+
+  .empty { color: var(--faint); text-align: center; padding: 70px 0; display: flex;
+    flex-direction: column; align-items: center; gap: 12px; font-size: 14px; }
+  .empty .ic { width: 34px; height: 34px; stroke-width: 1.5; color: #2c3546; }
+
+  footer { color: var(--faint); font-size: 11px; text-align: center; padding: 22px; }
+
+  #toast { position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%) translateY(8px);
+    background: var(--card-hi); border: 1px solid var(--border-hi); border-radius: 11px;
+    padding: 11px 20px; font-size: 13px; display: none; z-index: 99; opacity: 0;
+    box-shadow: 0 12px 32px rgba(0,0,0,.5); transition: opacity .2s, transform .2s; }
+  #toast.show { display: block; opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.5l7.1-.6z"/></symbol>
+  <symbol id="i-magnet" viewBox="0 0 24 24"><path d="m6 15-4-4 6.75-6.77a7.79 7.79 0 0 1 11 11L13 22l-4-4 6.39-6.36a2.14 2.14 0 0 0-3-3L6 15"/><path d="m5 8 4 4"/><path d="m12 15 4 4"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-clip" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6"/><path d="M9 16h6"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><path d="m10 8 6 4-6 4Z"/><rect x="2" y="4" width="20" height="16" rx="3"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></symbol>
+  <symbol id="i-pct" viewBox="0 0 24 24"><path d="M19 5 5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></symbol>
+</svg>
+<header>
+  <div class="hrow">
+    <div class="brand">
+      <div class="mark"><svg class="ic"><use href="#i-flame"/></svg></div>
+      <h1>Beauty & Skincare<small id="updated"></small></h1>
+    </div>
+    <div class="search"><svg class="ic"><use href="#i-search"/></svg>
+      <input id="fSearch" placeholder="搜文案 / hashtag / 账号"></div>
+    <select id="fTracker"><option value="">全部 Tracker</option></select>
+    <select id="fComp"><option value="">全部 Competitor</option></select>
+    <select id="fSort">
+      <option value="x">按 爆款倍数 (vs 自家平均)</option>
+      <option value="score">按 Viral Score</option>
+      <option value="er">按 Engagement Rate</option>
+      <option value="comments">按 Comments</option>
+      <option value="likes">按 Likes</option>
+      <option value="date">按 最新日期</option>
+    </select>
+    <button class="btn" id="fVideo"><svg class="ic"><use href="#i-video"/></svg>只看视频</button>
+
+    <a class="btn" href="team.html" target="_top" title="工作台"><svg class="ic"><use href="#i-users"/></svg>工作台</a>
+  </div>
+  <div class="tabs" id="tabs"></div>
+  <div class="chips" id="presets"></div>
+  <div class="chips" id="trends"></div>
+</header>
+<main>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none"><svg class="ic"><use href="#i-search"/></svg>没有符合条件的帖子</div>
+  <div class="more" id="moreWrap" style="display:none"><button id="moreBtn">载入更多</button></div>
+</main>
+<footer>数据来源 Supabase · 每周自动更新 · 状态更改即时同步全团队 · 视频由 Instagram 官方 embed 播放</footer>
+<div id="toast"></div>
+<script id="data" type="application/json">[{"id": "DeOq2GPDkSs", "tracker": "Beauty & Skincare 竞对", "competitor": "chaletteku", "caption": "留言【AI做图】，我发你另外30个GPT做图隐藏指令！🤫\n\n#ai #chatgpt #prompt #gpt #ai做图 #chalette", "transcript": "在签起文件上傳一張你的產品照片如果你打Stretch 3D Viewboard你就可以不用花一分錢讓你的產品出現在大型廣告牌上面如果你打Stretch Meta Ads你的Social Media廣告圖就可以直接搞定如果你打Stretch Fat Lake你就可以不用塞到場景也可以做出攝影棚級別的廣告圖片如果你打Stretch UGC Shoot你就可以不用請網紅去拍這種實拍圖自己就可以做出 UGC 產品圖如果你打Stretch 360 View你就可以直接生成屬360度旋轉的這種展示圖如果你打Stretch Loading Product你就可以做出這種雙奶碰出來產品懸浮的這種效果如果你打Stretch Lifestyle Shoot你就可以輕輕鬆鬆把你的產品圖片變成這種 Pinterest 氛圍感的照片如果你在評論區打出AI 作圖我就把我另外30個的AI 作圖影長Prom直接發給你", "brk": "Hook类型: 痛点直击\n结构: 痛点抛出 → 核心指令拆解 → 评论区引导留资\n为什么火: 免费白嫖高阶工具+具体实用场景直击小红书美妆创业者痛点\n改编角度: 盘点5个免费生成美妆产品大片或UGC实拍图的AI指令，引导护肤品牌主留言拿教程", "my": "很多人以为护肤一定要花很多冤枉钱，其实真的不是这样。😳\n\n很多人以为，想要改善皮肤暗沉和雀斑，就一定要去美容院做贵的疗程，或者把整套护肤品全部换掉。\n\n其实大家往往忽略了最重要的一点，很多人用了很多产品却觉得没有效果，往往是因为没有先了解自己的肤质和真正的问题所在。\n\n今天大米想跟你们分享三个平时在家就能做好的简单护理方法。\n\n第一个方法是做好温和的日常清洁。每天早晚用适合自己肤质的产品洗脸，把脸上的油脂和灰尘洗干净。这样不仅能让皮肤清爽，还能帮后面的护肤品更好地吸收。\n\n第二个方法是注重保湿和日常防晒。很多人出门只记得化妆，却忘了做好防晒。其实每天出门前擦一下防晒，不仅能帮皮肤防紫外线，还能让肤色看起来更均匀自然。\n\n第三个方法是关注内在的营养管理。除了外在的涂抹，平时也要注意饮食和作息。像大米自己平时也会喝 EASO 代餐，从日常饮食和营养摄取开始调整，慢慢建立更健康的生活习惯。\n\n我妈妈今年 70 岁了，她长期面对皮肤暗沉、肤色蜡黄和明显雀斑的问题，一直很担心自己这个年纪用了不适合。\n\n【剪辑:这里放案例画面】\n\n以前她总是随便买一些便宜的产品，结果皮肤越来越干，斑点也没有改善，整个人看起来气色很不好。\n\n后来她开始看我分享的护肤过程，了解了 Kakadu 亮白系列和试用装组合。现在她每天按时做好基础护肤和防晒，整个人看起来更有光泽，气色也变好了。\n\n如果你也想知道自己的皮肤适合什么护理方式，可以来找大米聊聊。❤️", "tags": "ai, chatgpt, prompt, gpt, ai做图, chalette", "bait": true, "type": "Video", "likes": 6012, "comments": 4451, "er": 13.09, "followers": 79947, "date": "2026-10-08", "url": "https://www.instagram.com/p/DeOq2GPDkSs/", "video": true, "ratio": 0, "score": 24.22, "status": "未处理", "x": 26.6}, {"id": "DeJvAGJARXD", "tracker": "Beauty & Skincare 竞对", "competitor": "chaletteku", "caption": "成年人自取欺辱的10件事，你中了几个？\n\n#个人成长 #人间清醒 #认知觉醒 #女性成长 #自我成长 #chalette", "transcript": "night.", "brk": "Hook类型: 痛点直击\n结构: 罗列现象 → 归纳扎心清单 → 引导自我审视\n为什么火: 踩中成年人社交与心理痛点，引发强烈共鸣与转发欲\n改编角度: 盘点护肤中自取其辱的10个无效习惯，直击成分党痛点", "my": "很多人以为皮肤暗沉，是因为年纪大了。😳\n其实不是。\n走到我们这个年纪，越来越觉得——\n很多时候，不是年纪的问题，而是我们一直用错了保养方式。\n以为要花很多钱、买一堆瓶瓶罐罐，或者每天花一个小时层层叠加，皮肤才能变好。\n其实，真正懂保养的人，反而不会给皮肤太多负担。\n第一步，先做好日常的温和清洁。\n把脸洗干净，不要让毛孔被多余的油脂和灰尘堵住。\n很多人忽略这一步，结果后面擦再贵的护肤品，皮肤也吃不进去。\n第二步，做好日常的防晒和基础保湿。\n像大米自己，出门前花不到两分钟，擦一支防晒加微遮瑕，就能搞定好气色。\n不用厚重的粉底，皮肤看起来自然有光泽，也不会觉得闷。\n第三步，如果是想针对暗沉和雀斑做进阶护理，可以试试 Kakadu 试用装组合。\n马来西亚 RM388，新加坡 RM438。\n里面包含 9 款产品，让你可以先体验，再根据自己的皮肤需求选择适合的护理方案。\n我妈妈 70 岁了，长期面对皮肤暗沉、肤色蜡黄和明显雀斑的问题。\n她也是看到我每天分享护肤过程，才开始了解花之美。\n以前她总担心产品不安全、在这个年纪用了不适合。\n现在她每天跟着温和保养，皮肤看起来比以前更有明亮感。\n想知道适合你皮肤的方式是什么？\n可以来找大米聊聊。❤️", "tags": "个人成长, 人间清醒, 认知觉醒, 女性成长, 自我成长, chalette", "bait": false, "type": "Video", "likes": 5561, "comments": 7, "er": 6.96, "followers": 79947, "date": "2026-10-06", "url": "https://www.instagram.com/p/DeJvAGJARXD/", "video": true, "ratio": 0, "score": 6.98, "status": "未处理", "x": 7.7}, {"id": "DfJJDi7RTAt", "tracker": "Beauty & Skincare 竞对", "competitor": "chaletteku", "caption": "你开始变强大的5个表现，看看自己有吗？\n\n#女性成长 #个人成长 #女强人 #自我提升 #赚钱 #人间清醒 #认知觉醒 #强者思维 #chalette", "transcript": "If I ever ever fall down one time, I'mma keep going on Cause I know I'm a champion and if I take a ticket and I'll still ride till the bitter end of time", "brk": "Hook类型: 身份共鸣\n结构: 黄金前3秒霸气英文BGM切入 → 抛出女性成长5大表现引发自我对号入座\n为什么火: 强节奏感BGM搭配女性觉醒痛点，激发强烈的情感共鸣与自省心理\n改编角度: 结合护肤换脸，如“真正开始爱自己的5个表现：从注重成分到精简护肤”", "my": "很多人以为，女人到了七十岁，脸上长斑和皮肤暗沉就是没办法的事。😳\n\n我妈妈今年七十岁了。她以前总觉得，自己这个年纪用什么护肤品都没用了，天天看着镜子里的雀斑和蜡黄叹气。\n\n其实不是这样的。\n\n女人不管到什么年纪，皮肤暗沉和长斑，很多时候是因为没有找到真正适合自己肤质的护理方式。\n\n我常常跟妈妈说，护肤其实不用搞得那么复杂。\n\n第一步，先把日常的清洁和补水做好。用温和的方式带走老废角质，让皮肤先喝饱水，后续的营养才能真正吃进去。\n\n第二步，针对暗沉和斑点问题，选择成分温和、有国际检测认证的护肤品。像我平时给妈妈用的花之美 Kakadu 亮白系列，就是通过 SGS 检测的，用起来比较安心。\n\n第三步，出门一定要做好日常防晒。不管是阴天还是晴天，防晒做好了，才能帮皮肤挡住紫外线带来的暗沉，省得花更多冤枉钱。\n\n【剪辑:这里放案例画面】\n我妈妈以前总担心安全问题，一直不敢随便乱用产品。现在她每天跟着我一起用花之美，皮肤看起来比以前更有光泽，整个人也更有精神了。\n\n走到我们这个年纪，对自己好一点，把皮肤照顾好，其实也是一种生活态度。\n\n想知道你的肤质适合哪一套产品吗？可以来找大米聊聊。❤️", "tags": "女性成长, 个人成长, 女强人, 自我提升, 赚钱, 人间清醒, 认知觉醒, 强者思维, chalette", "bait": false, "type": "Video", "likes": 1868, "comments": 8, "er": 2.35, "followers": 79947, "date": "2026-10-31", "url": "https://www.instagram.com/p/DfJJDi7RTAt/", "video": true, "ratio": 0, "score": 2.37, "status": "未处理", "x": 2.6}, {"id": "Dd6SHtrE7Sm", "tracker": "Beauty & Skincare 竞对", "competitor": "chaletteku", "caption": "最近很喜欢一句话：\n「车灯只能照亮50米，但你依然能开完全程」\n\n有时候，让我们迟迟不敢出发的，\n是总想先确定：\n这样选对不对？\n万一做不好怎么办？\n最后会不会白忙一场？\n\n可很多事情，真的要走了才知道\n你不走，只是想，永远没有答案\n\n绕了一点路，不代表之前的努力都白费了\n暂时看不清远方，也不妨碍你先走好眼前这一段\n\n愿我们都能少一点对未来的焦虑，\n多一点出发的勇气\n\n命运从没有标准答案，\n生活也无需事事圆满\n\n这14句话里，哪一句最像此刻的你？\n\n#Chalette #成长 #人生感悟 #生活 #活在當下", "transcript": "", "brk": "Hook类型: 身份共鸣\n结构: 金句引入 → 剖析焦虑 → 给出解法 → 互动收尾\n为什么火: 精准踩中现代人对未来的迷茫与精神内耗，引发强烈共鸣与转发\n改编角度: 结合护肤焦虑，如“总担心选错护肤品，其实先开始精简护肤最重要”", "my": "车灯只能照亮前面五十米，你其实也能把这条路开完全程。\n\n很多人以为，开始保养皮肤之前，\n一定要先把所有产品买齐，\n一定要把每一个成分都搞懂，\n一定要看到别人说有效才敢下手。\n\n其实不是这样的。\n让我们迟迟不敢开始的，\n往往只是想得太多，\n却忘了先走好眼前的第一步。\n\n第一步，先了解自己的皮肤。\n不用一上来就买整套大套组，\n先看看自己每天是怎么洗脸、怎么保湿的。\n把最基础的清洁和补水做好，\n皮肤其实就已经在慢慢变好了。\n\n第二步，从日常最需要的地方开始。\n比如很多人白天出门总是忽略防晒，\n或者皮肤干的时候随便拿个产品擦一下。\n其实只要选一支适合自己肤质、\n用起来舒服的防晒或者基础保湿，\n坚持每天用，就已经赢过很多人了。\n\n第三步，给皮肤一点时间和耐心。\n不要指望擦一两天就能有什么大改变，\n皮肤有它自己的代谢周期。\n每天花几分钟好好照顾它，\n顺其自然，状态就会慢慢变好。\n\n我妈妈今年七十岁了，\n她以前总觉得年纪大了，\n皮肤暗沉、有雀斑是正常的，\n用什么都没有用，\n干脆什么都不擦。\n\n【剪辑:这里放案例画面】\n\n后来她看到我每天都在分享护肤的习惯，\n才开始试着慢慢调整，\n每天认真做好基础保湿和防晒。\n现在她的皮肤看起来比以前更有光泽，\n整个人也精神多了。\n\n以前她总觉得自己年纪大了，保养也没用；\n现在她每天都会花一点时间照顾自己，\n不仅皮肤变亮了，\n连心情也跟着好起来。\n\n想知道现在最适合你的护肤方式是什么吗？\n可以来找大米聊聊。\n也愿看到这里的你和家人，都平安健康。", "tags": "Chalette, 成长, 人生感悟, 生活, 活在當下", "bait": false, "type": "Carousel", "likes": 1179, "comments": 2, "er": 1.48, "followers": 79947, "date": "2026-09-30", "url": "https://www.instagram.com/p/Dd6SHtrE7Sm/", "video": false, "ratio": 0, "score": 1.48, "status": "未处理", "x": 1.6}, {"id": "DetkYCEDUxC", "tracker": "Beauty & Skincare 竞对", "competitor": "chaletteku", "caption": "留言【AI剪辑】，我发你我的秘密！🤫㊙️\n\n#ai #codex #自动剪辑 #ai剪辑 #chatcut #chalette", "transcript": "不要打野你現在看到的字幕我人物旁邊的描邊我後面展示的圖片還有我手上這兩個會旋轉的Logo都是我用一句話讓AI幫我剪輯製作的就算今天你不會剪輯或會設計Videos的畫面也可以輕輕鬆鬆做到我這樣子的特效如果你也想要學會只要用AI實現自動剪輯在下面考驗一個AI剪輯我發你我的秘密", "brk": "Hook类型: 痛点直击+技能炫耀\n结构: 秀炫酷特效 → 降低门槛 → 引导留言获取秘籍\n为什么火: 用复杂视觉效果制造反差，精准戳中小白想轻松做特效的痛点。\n改编角度: 针对护肤品，可展示“素颜到发光妆效/成分解析全AI生成”，评论区留暗号引流。", "my": "很多人以为脸上有了雀斑和暗沉，就只能去医美花大钱。😳\n\n其实很多人觉得，保养皮肤一定要买好几千块的大牌。\n或者天天去美容院，才能把蜡黄的脸色救回来。\n\n其实不是这样的——\n有时候你觉得护肤没效果，只是没有找到适合自己的方式。\n\n今天大米来跟你分享三个日常照顾皮肤的方法。\n第一步，先做好日常的清洁和补水。\n很多人忽略了这一步，觉得随便洗洗就好。\n其实每天把脸洗干净、做好基础保湿，皮肤才吃得进营养。\n第二步，白天出门一定要做好防晒。\n像大米自己用防晒防了快两年，不仅能防晒还能自然提亮。\n一支就搞定，对懒人来说真的很方便。\n第三步，如果是皮肤有明显暗沉和雀斑的女生，可以试试 Kakadu 亮白系列。\n里面有 5 宝，从清洁到亮肤都有照顾到。\n整套的价格是 RM680，跟着日常习惯用就好。\n\n我妈妈今年 70 岁了，长期面对皮肤暗沉、肤色蜡黄和明显雀斑的问题。\n她以前总觉得年纪大了，用什么都没用，只能看着斑点越来越明显。\n后来她用了花之美的产品，每天认真护理。\n现在皮肤看起来比以前更有光泽，整个人也更有精神。\n\n如果你也想了解自己的皮肤适合什么护理方式，\n可以来找大米聊聊。❤️", "tags": "ai, codex, 自动剪辑, ai剪辑, chatcut, chalette", "bait": true, "type": "Video", "likes": 198, "comments": 310, "er": 0.64, "followers": 79947, "date": "2026-10-20", "url": "https://www.instagram.com/p/DetkYCEDUxC/", "video": true, "ratio": 0, "score": 1.41, "status": "未处理", "x": 1.5}, {"id": "DeTEXBikuBd", "tracker": "Beauty & Skincare 竞对", "competitor": "chaletteku", "caption": "留言【GPT】，我把另外40个提示词发给你！😉\n\n#chatgpt #ai #prompt #trend #gpt #photodesign #chalette", "transcript": "終於整個遠遠轉轉", "brk": "Hook类型: 悬念与独家资源吸引\n结构: 抛出价值诱饵 → 引导私信互动 → 承诺福利发放\n为什么火: 利用稀缺性诱饵和极低门槛的互动机制，快速撬动算法获取评论\n改编角度: 评论区留言【护肤】免费领40款成分表解析或定制抗衰护肤指南", "my": "很多人以为70岁皮肤变黄是正常的，其实根本不是。😳\n我妈妈以前也以为，年纪大了有雀斑、肤色蜡黄是很自然的事，怎么擦保养品都没用。\n其实大家不知道，很多时候不是产品不好，而是用的方法根本不适合自己的肤质，或者把不同系列的护肤品乱搭在一起，反而加重了皮肤的负担。\n走到我们这个年纪，要真正改善暗沉，其实只需要做好日常的基础护肤。\n第一步，先从温和的日常清洁和补水开始。\n不要每天用太多刺激的产品，选一套适合自己肤质的温和产品，把皮肤底子养好，水分够了，气色看起来自然就会比较有光泽。\n第二步，做好每天的日常防晒。\n很多人觉得不出门就不用防晒，其实紫外线才是让皮肤变黑变老的主因。\n我自己出门前都会用那支用习惯的养护防晒霜，防晒加提亮一支就能搞定，对懒人来说真的很方便。\n第三步，如果是想针对比较明显的雀斑或者肤色问题做进阶保养，可以了解看看DR1000微针系列。\n很多新朋友一开始都会问，到底应该怎么选产品，或者担心产品安不安全。\n我妈妈以前就是因为不懂得怎么搭配，盲目试了很多方法，结果皮肤越来越干，斑点看起来也更明显。\n后来她开始看我每天的分享，先了解自己的肤质和主要想改善的问题，再慢慢调整日常的护肤步骤。\n现在她不仅皮肤看起来比较明亮有光泽，整个人也精神多了。\n想知道你的肤质适合什么样的保养方式吗？\n你可以来找大米聊聊。❤️", "tags": "chatgpt, ai, prompt, trend, gpt, photodesign, chalette", "bait": true, "type": "Video", "likes": 584, "comments": 176, "er": 0.95, "followers": 79947, "date": "2026-10-10", "url": "https://www.instagram.com/p/DeTEXBikuBd/", "video": true, "ratio": 0, "score": 1.39, "status": "未处理", "x": 1.5}, {"id": "De6m2ZEn4kV", "tracker": "Beauty & Skincare 竞对", "competitor": "chaletteku", "caption": "Slow days in Hanoi 🇻🇳\n\n#hanoi #vietnam #trip #slowday", "transcript": "", "brk": "Hook类型: 身份共鸣\n结构: 异国慢节奏日常 → 氛围感画面 → 治愈生活方式\n为什么火: 满足了高压都市人群对松弛感与慢生活的精神向往\n改编角度: 结合美妆分享“河内慢生活中的素颜护肤日常”打造伪素颜松弛感", "my": "很多人以为皮肤暗沉，是因为年纪大了。\n其实真的不是这样。\n你可能以为，只要花大钱买最贵的面霜，或者把整套护肤品全都换掉，皮肤就会变亮。\n但其实大部分时候，皮肤蜡黄没有光泽，是因为平时没有做好最基础的日常清洁和温和保湿。\n今天大米想和大家分享三个平时在家就能做到的简单方法。\n第一个方法，每天早晚都要认真做好温和清洁。\n把脸洗干净了，后续的保养品才能真正被皮肤吸收。\n第二个方法，日常一定要做好防晒。\n像大米自己平时出门，都会习惯用那支用了快两年的养护防晒霜。\n防晒加妆前加微遮瑕加自然提亮，一支就能搞定。\n质地很轻透，不会觉得厚重，肤色看起来也会更均匀有光泽。\n第三个方法，日常要多喝水，配合好的饮食和生活习惯。\n内在和外在一起照顾好，皮肤状态才会慢慢变好。\n以前大米也常常觉得，护肤是一件很繁琐的事情，试过很多方法，但皮肤还是暗沉。\n直到后来开始注重日常的温和保养，每天花一点时间好好照顾自己，才发现皮肤其实可以维持很好的光泽。\n幸福其实很简单，就像每天把生活过好一样。\n想知道适合你肤质的防晒或者护肤方式吗？\n你可以来找大米聊聊。❤️", "tags": "hanoi, vietnam, trip, slowday", "bait": false, "type": "Carousel", "likes": 841, "comments": 8, "er": 1.06, "followers": 79947, "date": "2026-10-25", "url": "https://www.instagram.com/p/De6m2ZEn4kV/", "video": false, "ratio": 0, "score": 1.08, "status": "未处理", "x": 1.2}, {"id": "DeWoluYE2aM", "tracker": "Beauty & Skincare 竞对", "competitor": "chaletteku", "caption": "很多内耗都来自过度解读\n\n不必猜透每个人的心思，\n也不必事事都寻找答案\n\n把关注点放回自己身上，\n生活自然会轻松很多\n\n你呢？\n你是容易想太多的人，还是不太在意别人的人？😂\n\n#情感 #情感共鸣 #关系 #人际关系", "transcript": "", "brk": "Hook类型: 痛点直击\n结构: 抛出内耗现象 → 分析底层原因 → 给出解法并互动\n为什么火: 精准切中现代人群精神内耗的痛点，引发强烈情感共鸣\n改编角度: 结合护肤痛点，如“烂脸期总觉得别人在看你？把关注点收回，精简护肤”", "my": "很多人以为皮肤变好，一定要花大把钱去美容院。\n其实不是这样的。\n很多人觉得要买最贵的面霜，或者天天敷面膜，皮肤才会变透亮。\n其实很多时候，我们的皮肤会暗沉、蜡黄，是因为平时的护肤步骤太繁琐，反而给皮肤造成了负担。\n今天大米想跟你分享三个很实用的日常护肤习惯。\n第一，先做好温和的日常清洁。洗脸不要用太热的水，也不要过度去角质，把脸洗干净就好。\n第二，重视日常的补水和保湿。平时在家里，水乳保湿要做到位，给皮肤补充足够的水分。\n第三，白天出门一定要做好防晒。像大米自己出门，平时都会用那种一支就能防晒、妆前、微遮瑕的养护防晒霜，不仅省时间，对懒人来说真的很方便。\n以前我也是什么护肤品都往脸上抹，结果皮肤敏感又干燥。\n后来精简了日常护肤，用适合自己肤质的产品，才发现皮肤其实需要的是温和的养护，而不是各种厚重的堆叠。\n如果你现在也不知道自己的皮肤到底适合什么，可以来找大米聊聊。\n想知道这支防晒适不适合你？可以来找大米聊聊。❤️", "tags": "情感, 情感共鸣, 关系, 人际关系", "bait": false, "type": "Carousel", "likes": 725, "comments": 2, "er": 0.91, "followers": 79947, "date": "2026-10-11", "url": "https://www.instagram.com/p/DeWoluYE2aM/", "video": false, "ratio": 0, "score": 0.91, "status": "未处理", "x": 1.0}, {"id": "DelF7QZlURp", "tracker": "Beauty & Skincare 竞对", "competitor": "chaletteku", "caption": "留言【风扇】，我把我的制作流程发给你😉㊙️\n\n#风扇变装 #trend #ai #aivideo #higgsfield #chalette", "transcript": "", "brk": "Hook类型: 悬念互动\n结构: 炫酷变装展示 → 引导评论区互动 → 钩子私信引流\n为什么火: AI视觉特效带来强烈的视觉冲击，配合评论区免费领教程的钩子，极大提升了互动率与私信转化。\n改编角度: 结合护肤品成分科普或质地特写制作AI炫酷变装，评论区留言领独家配方表或测评表。", "my": "很多人以为皮肤变好，一定要花大钱去医美。\n其实真的不用。\n很多人每天花很多时间护肤，皮肤还是暗沉、肤色蜡黄。\n其实问题不是你买的不够贵，而是没有找到真正适合自己的方式。\n第一步，先了解自己的皮肤。\n不用每天盲目试错，先看看自己平时是偏干还是出油。\n找到主要想改善的问题，比如暗沉或者干燥。\n第二步，从日常护理做起。\n选择适合自己肤质的产品，不用一步到位买全套。\n像很多新朋友没用过花之美，都可以先从试用装开始体验。\n马来西亚是 RM388，新加坡是 RM438，里面包含九款产品。\n先让皮肤适应，再根据需求选择护理方案。\n第三步，保持简单的保养习惯。\n不用每天花几个小时，选对产品一支就能搞定日常防晒和提亮。\n就像大米自己用的防晒，平时出门一抹就很方便。\n以前总觉得护肤很麻烦，每天花很多时间还看不到效果。\n懂得先了解肤质、选择适合的试用装之后，皮肤看起来更有光泽，每天出门也省心很多。\n想知道你的肤质适合哪种方式？\n可以来找大米聊聊，我来帮你看看。\n想知道这支防晒适不适合你？可以来找大米聊聊。❤️", "tags": "风扇变装, trend, ai, aivideo, higgsfield, chalette", "bait": true, "type": "Video", "likes": 385, "comments": 109, "er": 0.62, "followers": 79947, "date": "2026-10-17", "url": "https://www.instagram.com/p/DelF7QZlURp/", "video": true, "ratio": 0, "score": 0.89, "status": "未处理", "x": 1.0}, {"id": "DeRKSAdk7Cw", "tracker": "Beauty & Skincare 竞对", "competitor": "chaletteku", "caption": "Tennis retreat in Hanoi 🎾\n\n#wilson #wilsontennis #vietnam #tennis #tennistraining", "transcript": "", "brk": "Hook类型: 身份共鸣\n结构: 运动场景引入 → 品牌装备展示 → 悠闲度假氛围\n为什么火: 精准捕捉精致生活方式与运动社交潮流，满足目标受众对松弛感审美的向往。\n改编角度: 结合美妆产品，展示精致女孩在运动或旅行场景下的“防汗抗打”妆容与随时补水的心机好物。", "my": "很多人以为年纪大了皮肤暗沉，只能花大钱去医美。\n其实真的不是这样。\n你可能只是没有用对适合自己肤质的日常护理方式。\n今天大米来分享三个普通女生在家就能做的护肤小习惯。\n第一个是做好基础清洁。\n不要用清洁力太强的产品，洗完脸觉得紧绷，其实是在伤害皮肤屏障。\n选择温和的产品，慢慢把底子养好。\n第二个是重视日常防晒。\n像大米自己出门，都会用防晒一支搞定，防晒加上自然提亮，皮肤看起来就会很有光泽。\n第三个是给皮肤适度的营养。\n如果是刚开始接触花之美的新朋友，可以先了解 Kakadu 试用装组合，马来西亚是 RM388，新加坡是 RM438。\n里面包含九款产品，让新顾客先体验，再根据自己的皮肤需求选择适合的方案。\n很多新朋友一开始也是什么都不懂，看着别人皮肤好很羡慕，自己却不知道从哪里开始。\n后来通过了解自己的肤质，先从试用装开始体验，慢慢找到适合自己的方式。\n皮肤开始有光泽了，整个人看起来也更有精神。\n如果你也想改善暗沉，不知道自己的皮肤适合什么。\n可以来找大米聊聊。\n想知道这支防晒适不适合你？可以来找大米聊聊。❤️", "tags": "wilson, wilsontennis, vietnam, tennis, tennistraining", "bait": false, "type": "Carousel", "likes": 520, "comments": 8, "er": 0.66, "followers": 79947, "date": "2026-10-09", "url": "https://www.instagram.com/p/DeRKSAdk7Cw/", "video": false, "ratio": 0, "score": 0.68, "status": "未处理", "x": 0.7}, {"id": "DfOrFjvH0Qe", "tracker": "Beauty & Skincare 竞对", "competitor": "janelean_cellglo", "caption": "", "transcript": "", "brk": "", "my": "", "tags": "", "bait": false, "type": "Carousel", "likes": 5, "comments": 0, "er": 0.55, "followers": 917, "date": "2026-11-02", "url": "https://www.instagram.com/p/DfOrFjvH0Qe/", "video": false, "ratio": 0, "score": 0.55, "status": "未处理", "x": 0}, {"id": "De1SxjpAot9", "tracker": "Beauty & Skincare 竞对", "competitor": "chaletteku", "caption": "留言 【video】 ，我发你完整Claude 视频特效prompt 🔥\n\n我最喜欢用的是第 18 😂， 你呢？\n\nFollow 我学会更多AI内容策略\n#claude #claudeai #videoediting #motiongraphics #contentcreator", "transcript": "数据推进打扣清单拉远接视冲刺转场玻璃大致手挥斗动绿幕幻景杂志封面数据远黄丝纸转场手机框标题墙变焦破框黄绕卡片UI世界回顾照片墙文字在表后面组织动态字幕想要19个Cloud视频特效Prob留言Videos我发完整的教程给你", "brk": "Hook类型: 利益诱饵\n结构: 效果展示 → 偏好引导 → 评论区留钩子\n为什么火: 用高质量视觉效果吸引眼球，设置低门槛互动获取干货\n改编角度: 评论区留言送护肤成分表或独家早C晚A搭配指南", "my": "很多人以为皮肤要花很多钱保养，其实真的没有。\n\n很多人以为，要变白、要淡斑，一定要买最贵的牌子。\n每天花几个小时护肤，或者去美容院做各种项目。\n其实走到我们这个年纪，越来越觉得，护肤真的不用那么复杂。\n\n其实不是你用的不够贵，而是方向没有找对。\n皮肤暗沉、肤色蜡黄，很多时候只是日常的清洁和补水没有做好。\n\n第一步，先做好每天的日常清洁和补水。\n用适合自己肤质的产品，把基础打好。\n每天花一点时间好好洗脸、好好补水，皮肤才不会干。\n\n第二步，注意日常的防晒和基础保护。\n像我平时出门，只要用一支防晒就能搞定。\n防晒加上妆前和自然提亮，一支就很方便。\n你看左右对比，肤色看起来更均匀，也有光泽。\n\n第三步，如果皮肤有明显的问题，可以先从试用装开始体验。\n像 Kakadu 试用装组合，马来西亚 RM388，新加坡 RM438。\n里面包含九款产品，让你可以先体验，再根据自己的皮肤需求选择。\n\n我妈妈今年七十岁，长期面对皮肤暗沉和雀斑的问题。\n她之前也很担心，不知道这个年纪用了适不适合。\n她长期看我分享的护肤过程，才开始了解花之美。\n现在她每天都在用，皮肤看起来比以前更有光泽。\n\n以前总是买一堆不适合的产品，结果皮肤还是没有改善。\n后来用对了方法，每天花一点时间好好保养，皮肤状态慢慢变得不一样。\n\n如果你想知道自己的肤质适合什么方式，可以来找大米聊聊。\n先跟我说说你目前最想改善的皮肤问题，我再跟你分享比较适合你的方式。", "tags": "claude, claudeai, videoediting, motiongraphics, contentcreator", "bait": true, "type": "Video", "likes": 103, "comments": 106, "er": 0.26, "followers": 79947, "date": "2026-10-23", "url": "https://www.instagram.com/p/De1SxjpAot9/", "video": true, "ratio": 0, "score": 0.53, "status": "未处理", "x": 0.6}, {"id": "De3HmCJNPb3", "tracker": "Beauty & Skincare 竞对", "competitor": "chaletteku", "caption": "一定要远离长期贬低消耗你的人！\n\n#个人成长 #女性成长 #认知觉醒 #人间清醒 #负能量 #内耗", "transcript": "如果你每一次跟一個人見面完你都開始去懷孕你自己我跟你講 這種人你連見都不要再一見了就算是很多年的朋友說話很多年的親戚也可以我跟一個人出去就有兩個原因第一個原因就是我開心我跟你在一起我會有情緒上面的價值第二個東西就是我要做事情要談生意如果這兩個人都沒有站起床一個人說 既然你出去是為了什麼你跟他講我要減肥他就跟你講減什麼肥你不能收的你跟他講我想要找一個健身房去做均找一個老師但他就跟你講你三分鐘的獨當費錢你講什麼都是錯的跟他出去你又沒有辦法快樂得到事業上面的麻煩全部都沒有重要的感覺所以我跟你講我的人生是很少朋友的甚至可以講沒有朋友因為很多人他都是不想你過得好的甚至有些父母都看不順眼他的孩子過得比他還要好人就是會有這種進度的心我不是講你有這個東西是過的但是你能不能控制你自己很多人他沒有辦法控制他自己度自己的心他就會用言語行為來傷害你你要有個成熟的思維你才能夠控制好你自己像小孩子這樣沒有辦法得到這個玩具他就要哭了你不會嗎因為你會控制你自己嗎這個是你行為上面的控制你你剛才在思想上面很多人是不會的就算他上次是50所以他歲數沒有關係是他成熟的問題所以他就會想要懂你懂要你過你就不爽就不要玩玩那該要花更多的時間盡力去更讓你愉快讓你有所成就的人在一起就夠了如果你跟你自己相處就能夠很愉快你完全可以我在你自己的世界裡面", "brk": "Hook类型: 痛点直击\n结构: 亮明观点(远离消耗者) → 举例痛点(打击否定) → 深度剖析(嫉妒心理) → 升华建议(独处与筛选)\n为什么火: 精准戳中女性日常社交中的情感内耗痛点，引发强烈共鸣与情绪宣泄\n改编角度: 结合护肤避坑，如“远离打击你皮肤变好的人”，劝导粉丝投资让自己发光的正能量产品", "my": "如果你每次照鏡子看到自己的臉開始嘆氣，我跟你講，這種內耗真的不要再繼續了。\n\n很多人以為，保養皮膚就是要花大錢、買一堆看不懂成分的高級瓶瓶罐罐，每天花幾個小時在鏡子前面慢慢擦。\n\n其實真的不是。\n\n大米以前也是這樣，覺得一定要買最貴的，或者試過很多網路上說有效的方法，結果皮膚還是暗沉、蠟黃，甚至更容易敏感不舒服。\n\n後來才明白，照顧皮膚其實跟過日子一樣，要找到適合自己的方式，而不是盲目跟風。\n\n第一步，先了解自己的真實狀況。\n\n很多人連自己是乾性還是油性都搞不清楚，就跟著別人亂買。\n\n大米每次遇到來問的姐妹，都會先問她平時用什麼、最想改善哪裡，幫她看看問題到底出在哪裡。\n\n第二步，挑選真正溫和、適合日常的保養。\n\n不用每天繁瑣地做一堆步驟，而是挑選像 Kakadu 亮白系列這樣，把日常清潔、補水、保濕和亮膚照顧好，讓皮膚慢慢找回原本的光澤。\n\n如果平時比較忙，像大米自己用花之美養護防晒霜，防晒、妝前、微遮瑕和自然提亮，一支就能搞定，對懶人來說真的很方便。\n\n第三步，給皮膚一點時間去適應。\n\n不管是日常保養還是用 Kakadu 試用裝組合先體驗看看，都要給皮膚一個呼吸和適應的過程，不要今天用明天就想看到奇蹟。\n\n就像我媽媽，七十歲了，一開始也會擔心自己的年紀能不能用，會不會不安全。\n\n後來了解了品牌的 SGS 檢測、KKM NOT、MyCO2 認證和兩百万責任保障，才真正安心開始用。\n\n以前不懂的時候，總覺得保養很難，常常買錯東西又浪費錢，皮膚也一直沒有明顯改善。\n\n現在懂得先了解自己的膚質、選擇有安全認證的產品，每天花少少的時間，反而越養越穩定。\n\n想知道現在用的護膚方式適不適合你？可以來找大米聊聊。\n\n也願看到這篇的你和家人，都平安健康。", "tags": "个人成长, 女性成长, 认知觉醒, 人间清醒, 负能量, 内耗", "bait": false, "type": "Video", "likes": 399, "comments": 4, "er": 0.5, "followers": 79947, "date": "2026-10-24", "url": "https://www.instagram.com/p/De3HmCJNPb3/", "video": true, "ratio": 0, "score": 0.51, "status": "未处理", "x": 0.6}, {"id": "Dfbpg9BNlYP", "tracker": "Beauty & Skincare 竞对", "competitor": "chaletteku", "caption": "创业到现在，我最庆幸的一件事，就是当初别人不看好我的时候，我还是选择继续走下去。\n\n23岁做intern，一个月赚RM1000；\n24岁的时候，甚至一度没有收入。\n\n那时候连我自己都不知道未来会怎样，更不要讲，要别人相信我以后可以开自己的公司、拥有自己的团队，从自己1个人，拼到现在10多个人。\n\n在还没有做出成绩之前，被质疑是家常便饭。\n以前会想解释，后来才发现，解释再多，也不如把眼前的事情做好。\n\n创业让我慢慢学会，不再每做一个决定，都向别人要认可。\n如果每走一步，都要等别人觉得我可以，那我可能到今天都还停在原地。\n\n不会，就去学；做了没有效果，就找原因、换方法。\n**解决问题，而不是被问题解决。**\n\n我也不是一开始就知道自己选对了，而是在一次次解决问题的过程中，把这条路慢慢走通。\n\n我很庆幸，当初没有因为别人的不看好，就选择放弃。\n\n接下来，还有很多想做的事。\n希望再过5年回头看，我也能像今天一样，庆幸自己有继续往前走。\n\n我们一起加油❤️\n\n#创业 #女性创业 #人间清醒 #认知觉醒 #女性独立 #相信自己 #女老板 #创业心得 #chalette", "transcript": "I'm a version with no brakes. I'm invincible. And I will never see you.", "brk": "Hook类型: 身份共鸣\n结构: 逆境低谷 → 顶住质疑 → 团队做大 → 人间清醒\n为什么火: 女性创业者热血逆袭的真实经历触动心弦\n改编角度: 讲述从烂脸期到逆袭拥有好皮肤的坚持历程", "my": "很多人以为，要开始好好照顾自己的皮肤，一定要花很多钱去买一堆瓶瓶罐罐。\n其实不是。\n很多时候，你不是没有把皮肤养好，而是用错了方式，把简单的护肤弄得太复杂。\n今天大米想跟你分享，三个普通女生也能用、不用走冤枉路的护肤小方法。\n第一个方法，每天做好温和清洁和日常补水。\n很多人觉得洗脸越干净越好，其实皮肤洗得太干，反而会变得更敏感。\n用适合自己肤质的产品，把基础保湿做好，皮肤才不会动不动就闹脾气。\n第二个方法，出门一定要做好防晒。\n防晒不是为了怕晒黑，而是为了保护皮肤不受紫外线伤害。\n像大米自己用防晒已经快两年了，防晒加妆前一支搞定，对懒人来说真的很方便。\n皮肤看起来有光泽又自然，不需要厚重的底妆。\n第三个方法，先了解自己的皮肤问题，再选择适合的护理方式。\n不要别人用什么有效，你就跟着买什么。\n每个人的肤质都不一样，先看看自己最想改善的是暗沉、干燥还是斑点。\n【剪辑:这里放案例画面】\n就像我70岁的妈妈，长期面对皮肤暗沉和雀斑的问题。\n她以前总是买一大堆贵的产品，结果皮肤还是没有明显改善，自己也很苦恼。\n后来她看了我平时分享的护肤过程，开始了解Kakadu试用装组合。\n马来西亚的朋友可以用RM388，新加坡的朋友可以用RM438，里面包含九款产品。\n先让皮肤去体验，再根据自己的需求选择适合的方案。\n现在妈妈的皮肤看起来比以前更有光泽，整个人也更有自信。\n如果现在的你，也一直在护肤这条路上找不到方向，不知道该从哪里开始。\n可以来找大米聊聊，先告诉大米你目前最想改善的皮肤问题。\n想知道适合你的方式是什么？可以来找大米聊聊。❤️", "tags": "创业, 女性创业, 人间清醒, 认知觉醒, 女性独立, 相信自己, 女老板, 创业心得, chalette", "bait": false, "type": "Video", "likes": 359, "comments": 4, "er": 0.45, "followers": 79947, "date": "2026-11-07", "url": "https://www.instagram.com/p/Dfbpg9BNlYP/", "video": true, "ratio": 0, "score": 0.46, "status": "未处理", "x": 0.5}, {"id": "DfpPjBDuyBX", "tracker": "Beauty & Skincare 竞对", "competitor": "chaletteku", "caption": "留言【神图】，我把另外20个修图指令发你！🔥\n\n#chatgpt #修图 #p图 #photoedit #修图指令 #ai修图 #chalette #gpt", "transcript": "拍照的照片先不要刪掉这五个Touch Beauty的指令把你的肺片变成图踢这个指令照片一秒变清晰踢这个指令头发挡点也有了救踢这个指令把你的眼睛打开踢这个指令表情不自然也不怕踢这个指令不用再自己动手调色我整理出另外二十个指令留言 神服 我发给你", "brk": "Hook类型: 痛点直击\n结构: 痛点抛出 → 核心指令展示 → 引导评论留资\n为什么火: 解决女生修图繁琐痛点，用高效AI指令和免费资料诱饵实现高评论互动。\n改编角度: 结合护肤痛点，推出“5个AI皮肤急救指令”，引流私域送20套抗衰护肤指南。", "my": "很多人以为我上了底妆，其实没有。\n\n平时照镜子的时候，总是觉得皮肤看起来暗沉蜡黄。\n很多人以为想要改变这种状态，就要花大钱去做医美，或者买一堆厚重的粉底来遮。\n其实不是，真正的原因是日常的清洁和基础保湿没有做好，皮肤没有底子。\n\n对懒人来说，其实只要用对简单的方法。\n第一个方法，做好每天的日常清洁。\n选择温和的洗面产品，把脸洗干净。\n不用花太多时间，皮肤没有负担。\n洗完之后，皮肤摸起来很舒服。\n\n第二个方法，做好日常的补水保湿。\n用温和的水分产品拍在脸上。\n给皮肤补充水分，让皮肤喝饱水。\n用完之后，皮肤看起来很有光泽。\n\n第三个方法，出门前做好基础防护。\n像我自己，出门前会用花之美养护防晒霜。\n防晒加上妆前加上微遮瑕，一支就能搞定。\n质地很自然，不会觉得很厚重。\n\n我妈妈今年七十岁，长期面对皮肤暗沉、肤色蜡黄和明显雀斑的问题。\n她以前出门总觉得自己皮肤不好，不敢拍照。\n后来用了花之美系列，每天认真做好基础护肤。\n现在皮肤看起来更有光泽，整个人也更有精神。\n\n想知道花之美的试用装适不适合你？\n可以来找大米聊聊。\n也愿看到这篇的你和家人，都平安健康。", "tags": "chatgpt, 修图, p图, photoedit, 修图指令, ai修图, chalette, gpt", "bait": true, "type": "Video", "likes": 133, "comments": 76, "er": 0.26, "followers": 79947, "date": "2026-11-12", "url": "https://www.instagram.com/p/DfpPjBDuyBX/", "video": true, "ratio": 0, "score": 0.45, "status": "未处理", "x": 0.5}, {"id": "Debi0PzETRa", "tracker": "Beauty & Skincare 竞对", "competitor": "chaletteku", "caption": "留言【Design】，我发你操作流程！😉\n\n#ai #codex #higgsfield #aiads #aicontent #aidesign #chalette", "transcript": "很多人用AI到今天才只會生產一盞土阿拉馬我跟妳講妳太浪費了現在Cordes配一個工具可以直接成為妳的品牌設計團隊妳要做的這種UGC 彈匹 推延模型廣告素材甚至一整套品牌內容都可以用它去操作這個工具就叫做Kits ViewKits View最近新推出來的新的市場主流而Cordes剛好最會去動畫去操作這些東西兩個配菜一起無論妳給它什麼素材它都能夠生素妳想要的東西操作很簡單冒險兩個步驟首先第一個步驟就進去你的Cordes然後妳就可以掛印掛印有夠的其實妳就可以選Kits View按了Kits View過妳就Install Connect然後就Connect了第二個步驟其實就是做素材直接講妳要什麼湯就可以做給妳比如這個全部妳都可以做出來過去妳還要請一整個團隊把妳去做還要等他們幾天現在妳Kits View加Cordes妳要改幾次都可以妳想要完整的流程像妳寫個D站我叫助理發給妳", "brk": "Hook类型: 痛点直击\n结构: 痛点揭示 → 工具组合演示 → 降本增效对比 → 引导私域转化\n为什么火: 直击美妆品牌老板痛点，用“AI替代设计团队”的降本增效噱头激发强烈好奇。\n改编角度: 结合美妆痛点，演示如何用AI一键生成高质感UGC产品视频或节日营销素材。", "my": "", "tags": "ai, codex, higgsfield, aiads, aicontent, aidesign, chalette", "bait": true, "type": "Video", "likes": 89, "comments": 73, "er": 0.2, "followers": 79947, "date": "2026-10-13", "url": "https://www.instagram.com/p/Debi0PzETRa/", "video": true, "ratio": 0, "score": 0.39, "status": "未处理", "x": 0.4}, {"id": "DdtbtSSyY7Q", "tracker": "Beauty & Skincare 竞对", "competitor": "janelean_cellglo", "caption": "原来我的「迷你版」长这样呀！\n一大一小，真的好可爱 😍", "transcript": "", "brk": "", "my": "", "tags": "", "bait": false, "type": "Image", "likes": 1, "comments": 0, "er": 0.11, "followers": 917, "date": "2026-09-25", "url": "https://www.instagram.com/p/DdtbtSSyY7Q/", "video": false, "ratio": 0, "score": 0.11, "status": "未处理", "x": 0}, {"id": "DeidWCBjZ3F", "tracker": "Beauty & Skincare 竞对", "competitor": "suismeraofficial", "caption": "Suismera销售No.1👑 #王牌亮白乳 \n\n不但是效果好、质地好最重要的是 \n采用安全温和成分 与多国成分专利💯\n✔️成分天然 温和安全\n✔️合规格产品kkm ,sgs认证\n✔️孕妇和小孩都适合使用🤰🧒🏻\n…………………………………………………\n大亮白乳+小亮白乳+美白洁面三件套！ 原价RM384 #周年特惠仅RM188⁉️⁉️", "transcript": "Song", "brk": "Hook类型: 身份共鸣\n结构: 痛点引入 → 专利成分背书 → 独家周年特惠\n为什么火: 解决敏感肌与孕妇美白痛点，限时半价促销刺激冲动消费\n改编角度: 突出孕妇可用与大额折扣，针对敏感肌人群做限时买赠套组改编", "my": "很多人以为皮肤暗沉蜡黄，只能靠每天花时间厚厚遮瑕。😳\n\n其实不是的。\n很多人以为只要疯狂买贵的护肤品，或者天天去做护理，肤色就能变亮。\n但其实方向不对，不仅浪费钱，皮肤还会觉得负担很重。\n\n真正让皮肤看起来有光泽、均匀的方法，其实很简单，只要日常做好这三步。\n\n第一步，每天做好温和清洁。\n把脸洗干净，皮肤没有多余负担，后面的护肤品才能真正吸收进去。\n不用买太复杂的工具，用日常温和的洁面产品就好。\n\n第二步，做好日常防晒与基础提亮。\n像我自己出门，经常就只擦一支防晒加微遮瑕，防晒、妆前、微遮瑕加自然提亮，一支就能搞定。\n对懒人来说真的很方便，而且看起来像有化妆，但又不会很厚重。\n\n第三步，给皮肤补充日常需要的营养。\n不管是外在的护理，还是内在的饮食与营养管理，都要由内而外去照顾。\n很多人忽略了内在调理，难怪皮肤状态总是反反复复。\n\n我妈妈今年 70 岁了，她以前也经常面对皮肤暗沉、肤色蜡黄和明显雀斑的问题。\n她最担心的就是产品安全吗，有什么认证吗，这个年纪用了适合吗。\n【剪辑:这里放案例画面】\n后来她看到我一直在分享花之美的护肤过程，才开始了解和使用。\n现在她的皮肤看起来更明亮、更有光泽，整个人气色也精神很多。\n\n以前大家总觉得护肤很麻烦，试了很多方法都没有明显改善，不知道该怎么选。\n现在只要了解自己的肤质和主要问题，用对适合的方式，其实照顾皮肤可以很简单。\n\n如果你也想知道自己适合什么样的护肤方式，可以来找大米聊聊。❤️", "tags": "王牌亮白乳, 周年特惠仅RM188", "bait": false, "type": "Video", "likes": 0, "comments": 0, "er": 0.0, "followers": 5985, "date": "2026-10-16", "url": "https://www.instagram.com/p/DeidWCBjZ3F/", "video": true, "ratio": 0, "score": 0.0, "status": "未处理", "x": 0}, {"id": "DfEs-lwBjfB", "tracker": "Beauty & Skincare 竞对", "competitor": "janelean_cellglo", "caption": "自拍一张❤️ 就可以打包快递发货给顾客！\n马上丢单过来，马上发货！\n#顾客带走3支防晒霜\n#Cellglo #防晒霜推荐", "transcript": "", "brk": "Hook类型: 身份共鸣\n结构: 自拍切入 → 晒单发货 → 引导下单\n为什么火: 真实出单日常建立信任感，激发从众购买欲\n改编角度: 拍摄打包热卖防晒霜实景，突出爆单氛围吸引代理与顾客", "my": "很多人以为出门防晒随便涂一下就好，其实不是。\n\n很多人以为防晒霜只要质地清爽、随便在大超市买一支就行，其实根本没有照顾到皮肤真正的需要。\n\n大米以前也觉得防晒只是为了不晒黑，直到用了这款花之美养护防晒霜快两年，才发现真正好的防晒不只是挡住紫外线，还能一边防晒一边照顾皮肤。\n\n对懒人来说，这支真的特别方便。\n\n第一，它把防晒、妆前、微遮瑕和自然提亮全部集中在了一支里面。\n\n平时出门不想化厚重的底妆，只要轻轻擦这一支，肤色看起来就很有光泽。\n\n第二，很多人关心的安全性问题，它有 SGS 检测和 KKM NOT 的保障，用起来让人很安心。\n\n第三，如果你从来没有用过花之美，可以先看看 Kakadu 试用装组合。\n\n这里面包含了九款产品，马来西亚是 RM388，新加坡是 RM438。\n\n先让皮肤试用体验，再根据自己的皮肤需求选择适合的护理方案。\n\n以前大米为了找适合日常用的防晒，试过很多质地太油或者太干的产品。\n\n现在用对了这种一支搞定的防晒，不仅省时间，皮肤看起来也更均匀。\n\n想知道这支防晒适不适合你，可以来找大米聊聊。❤️", "tags": "顾客带走3支防晒霜, Cellglo, 防晒霜推荐", "bait": false, "type": "Image", "likes": 0, "comments": 0, "er": 0.0, "followers": 917, "date": "2026-10-29", "url": "https://www.instagram.com/p/DfEs-lwBjfB/", "video": false, "ratio": 0, "score": 0.0, "status": "未处理", "x": 0}, {"id": "DejAEuMiVA0", "tracker": "Beauty & Skincare 竞对", "competitor": "suismeraofficial", "caption": "以前为了白，又是买美白霜、又是涂素颜霜、身体乳、防晒霜…钱包和桌面都遭不住！\n现在一瓶  #Suismera王牌亮白乳 全搞定！\n💥1支顶7瓶，省下的钱和时间香到跺脚\n💥一抹即白，立刻拥有好气色\n💥越用越白，养肤提亮两不误\n…………………………………………………\n大亮白乳+小亮白乳+美白洁面三件套！ 原价RM384 #周年特惠仅RM188⁉️⁉️\n\n销量千万的王牌果然名不虚传！全马包邮，PM下单，黄黑皮直接冲! *t&c apply", "transcript": "", "brk": "Hook类型: 痛点直击\n结构: 痛点痛陈 → 核心产品亮相 → 多效合一展示 → 优惠限时逼单\n为什么火: 精准击中黄黑皮女生嫌麻烦又想变白的痛点，用多效合一和极致性价比快速建立心智。\n改编角度: 放大黄黑皮夏日防晒美白的尴尬场景，用“1支顶7瓶”的极致懒人省钱逻辑切入。", "my": "很多人以为皮肤暗沉蜡黄，只能花大钱去做各种医美。\n\n其实很多人以为，只要天天抹很厚的底妆，就能把黄气遮掉。\n结果脸上卡粉卡得一塌糊涂，看着比平时还要显老。\n\n走到我们这个年纪，越来越觉得，护肤真的不用那么复杂。\n其实皮肤看起来没有光泽，往往是因为日常的保湿和清洁没有做到位。\n\n第一步，先把脸洗干净。\n平时洗脸不要随便应付，一定要把毛孔里的脏东西洗掉。\n选温和的清洁产品，洗完脸上才不会觉得干。\n这样后续的护肤品才能真正吸收进去。\n\n第二步，做好日常的补水和保湿。\n皮肤底子喝饱水了，看起来才会有那种透亮的感觉。\n不用买太多杂七杂八的产品，找到适合自己的基础护肤就很够了。\n坚持下来，摸起来手感都会不一样。\n\n第三步，出门一定要做好防晒。\n不管是太阳大还是阴天，紫外线其实一直在那里。\n像我平时出门，就会用花之美的养护防晒霜。\n这支我已经用了快两年，防晒加妆前加微遮瑕加自然提亮，一支就搞定，对懒人来说真的很方便。\n你看左右对比，肤色是不是看起来更均匀、更有光泽？\n\n我妈妈今年 70 岁，她长期面对皮肤暗沉、肤色蜡黄和明显雀斑的问题。\n她一开始也很担心，问我这个年纪用了到底适不适合。\n后来她用了花之美的产品，每天慢慢调整，现在皮肤看起来比以前有光泽多了。\n\n以前总是买一堆瓶瓶罐罐，桌面堆得满满的，用起来又麻烦又没效果。\n后来跟着自己的肤质一步一步来，才发现皮肤其实可以越养越稳定。\n\n想知道这支防晒适不适合你？\n可以来找大米聊聊。", "tags": "Suismera王牌亮白乳, 周年特惠仅RM188", "bait": false, "type": "Video", "likes": 0, "comments": 0, "er": 0.0, "followers": 5985, "date": "2026-10-16", "url": "https://www.instagram.com/p/DejAEuMiVA0/", "video": true, "ratio": 0, "score": 0.0, "status": "未处理", "x": 0}, {"id": "DeioEQqE1R1", "tracker": "Beauty & Skincare 竞对", "competitor": "suismeraofficial", "caption": "暗沉蜡黄、腋下黑、大腿黑、痘印…\n连脖子和胸口都有色差，穿什么都显脏！\n\n被 #Suismera王牌亮白乳 狠狠拿捏了！\n早晚涂，坚持28天直接摆脱暗黄！\n脖子、锁骨、关节哪里黑涂哪里，白到匀净透亮✨\n…………………………………………………\n大亮白乳+小亮白乳+美白洁面三件套！ 原价RM384 #周年特惠仅RM188⁉️⁉️", "transcript": "Usually, he was punished for being繁 red with S Tae 우리가 이런 안 мы月 with 7 go. Someone who stood in the way put me inOL", "brk": "Hook类型: 痛点直击\n结构: 罗列全身暗沉痛点 → 引出王牌亮白乳 → 给出28天白净成果与限时特惠\n为什么火: 精准戳中亚洲女性对全身色差和关节黑的容貌焦虑，搭配超高性价比促单。\n改编角度: 放大“夏日吊带/穿衣显脏”场景，用局部美白前后对比强化视觉冲击。", "my": "很多人以为皮肤暗沉蜡黄，只能天天花大钱去做医美，其实根本不用。\n\n平时我们总觉得，想要改善肤色不匀和手臂关节的暗沉，一定要买一堆贵得要命的保养品，把梳妆台塞得满满的。\n\n其实不是这样的，真正让你皮肤看起来脏脏的，是没有选对适合自己肤质的日常保养方式。\n\n大米平时在家里，其实只用三个简单的方法来照顾皮肤。\n\n第一步，先把日常的清洁做好。每天洗脸的时候，水温不要太热，洗完之后要趁皮肤还润的时候，赶快做好基础保湿，这样才不会让水分流失得太快。\n\n第二步，选择温和的日常亮白保养。像大米自己平时在用的 Kakadu 亮白系列，里面的成分很适合用来做日常的清洁、补水和保湿，用起来温和不刺激。\n\n第三步，出门前一定要做好防晒。大米自己手上这支花之美养护防晒霜，已经用了快两年了，防晒加妆前一支就能搞定，不仅能让肤色看起来更均匀，对懒人来说真的很方便。\n\n大米的妈妈今年 70 岁，老人家平时最担心皮肤暗沉和雀斑的问题，总问我这个年纪用了安不安全。\n\n以前妈妈总是随便买市面上的产品，用了一段时间没看到效果就放弃，皮肤看起来还是没有光泽。\n\n后来开始用花之美的产品慢慢调理，现在不只皮肤看起来更明亮，整个人也更有精神了。\n\n想知道这些日常保养的产品适不适合你？可以来找大米聊聊。❤️", "tags": "Suismera王牌亮白乳, 周年特惠仅RM188", "bait": false, "type": "Video", "likes": 0, "comments": 0, "er": 0.0, "followers": 5985, "date": "2026-10-16", "url": "https://www.instagram.com/p/DeioEQqE1R1/", "video": true, "ratio": 0, "score": 0.0, "status": "未处理", "x": 0}]</script>
+<script>
+const DATA = JSON.parse(document.getElementById('data').textContent);
+const SUPA = 'https://vcyjgyylzvozhgmbzgai.supabase.co';
+const ANON = 'sb_publishable_cyJwnqIbzzpx1yqgw8ptOA_GxaCKgEO';
+const STATUSES = ["未处理", "拍摄中", "已处理", "跳过"];
+document.getElementById('updated').textContent = '更新于 2026-11-13 11:45 (GMT+8)';
+const PAGE = 48;
+let shown = PAGE;
+let videoOnly = false;
+let curTab = '全部';
+
+const $ = id => document.getElementById(id);
+const fmt = n => n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'K' : String(n);
+const getKey = () => ANON;  // anon key is baked in — safe, can only change status
+const I = n => '<svg class="ic"><use href="#i-' + n + '"/></svg>';
+const esc = s => String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const byRec = {}; DATA.forEach(d => byRec[d.id] = d);
+const TRENDS = [["chalette", 3], ["个人成长", 2], ["人间清醒", 2], ["认知觉醒", 2], ["女性成长", 2]];
+DATA.forEach(d => {
+  d.days = d.date ? Math.max(0, Math.floor((Date.now() - new Date(d.date + 'T00:00:00')) / 864e5)) : null;
+  d.horse = d.followers > 0 && d.followers < 50000 && ((d.x || 0) >= 2 || d.score >= 10);
+});
+const PRESETS = [
+  { k: 'px', icon: 'trend', label: '真爆款 ×2+', f: d => (d.x || 0) >= 2 },
+  { k: 'pn', icon: 'star', label: '近7天', f: d => d.days !== null && d.days <= 7 },
+  { k: 'ph', icon: 'zap', label: '黑马', f: d => d.horse },
+  { k: 'pb', icon: 'magnet', label: '引流帖', f: d => d.bait },
+];
+const presetOn = {};
+
+function toast(msg, ok) {
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  t.style.borderColor = ok ? 'var(--green)' : 'var(--red)';
+  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// filters
+const comps = [...new Set(DATA.map(d => d.competitor))].sort();
+comps.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = '@'+c; $('fComp').appendChild(o); });
+[...new Set(DATA.map(d => d.tracker))].forEach(t => { const o = document.createElement('option'); o.value = t; o.textContent = t; $('fTracker').appendChild(o); });
+
+function matchQ(d) {
+  const q = ($('fSearch').value || '').trim().toLowerCase();
+  return !q || (d.caption + ' ' + (d.tags || '') + ' ' + (d.transcript || '') + ' ' + (d.brk || '') + ' ' + d.competitor).toLowerCase().includes(q);
+}
+
+function basePool() {
+  const t = $('fTracker').value, c = $('fComp').value;
+  return DATA.filter(d => (!t || d.tracker === t) && (!c || d.competitor === c) && (!videoOnly || d.video)
+    && matchQ(d) && PRESETS.every(p => !presetOn[p.k] || p.f(d)));
+}
+
+function filtered() {
+  const s = $('fSort').value;
+  let arr = basePool().filter(d => curTab === '全部' || d.status === curTab);
+  const key = { score:'score', er:'er', comments:'comments', likes:'likes', x:'x' }[s];
+  if (s === 'date') arr.sort((a,b) => (b.date||'').localeCompare(a.date||''));
+  else arr.sort((a,b) => (b[key]||0) - (a[key]||0));
+  return arr;
+}
+
+let dragRec = null;
+
+function renderTabs() {
+  const pool = basePool();
+  const counts = { '全部': pool.length };
+  STATUSES.forEach(s => counts[s] = pool.filter(d => d.status === s).length);
+  $('tabs').innerHTML = '';
+  ['全部', ...STATUSES].forEach(name => {
+    const el = document.createElement('div');
+    el.className = 'tab' + (curTab === name ? ' on' : '') + (name !== '全部' ? ' droppable' : '');
+    el.innerHTML = esc(name) + ' <span class="cnt">' + counts[name] + '</span>';
+    el.onclick = () => { curTab = name; shown = PAGE; render(); };
+    if (name !== '全部') {
+      el.ondragover = e => { if (dragRec) { e.preventDefault(); el.classList.add('over'); } };
+      el.ondragleave = () => el.classList.remove('over');
+      el.ondrop = e => {
+        e.preventDefault(); el.classList.remove('over');
+        const d = byRec[dragRec]; dragRec = null;
+        if (d && d.status !== name) setStatus(d, name);
+      };
+    }
+    $('tabs').appendChild(el);
+  });
+}
+
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target, pid = el.dataset.pid;
+      if (!el.querySelector('iframe')) {
+        const f = document.createElement('iframe');
+        f.src = 'https://www.instagram.com/p/' + pid + '/embed/';
+        f.loading = 'lazy'; f.allow = 'autoplay; encrypted-media';
+        el.appendChild(f);
+      }
+      io.unobserve(el);
+    }
+  });
+}, { rootMargin: '400px' });
+
+async function setStatus(d, val) {
+  try {
+    const r = await fetch(SUPA + '/rest/v1/posts?post_id=eq.' + encodeURIComponent(d.id), {
+      method: 'PATCH',
+      headers: { 'apikey': ANON, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ status: val })
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    d.status = val;
+    cacheStatus(d.id, val);
+    toast('✓ @' + d.competitor + ' 已移到「' + val + '」', true);
+  } catch (e) {
+    toast('更新失败: ' + e.message + (String(e.message).includes('401') || String(e.message).includes('403') ? ' — 密钥无效?' : ''), false);
+  }
+  render();
+}
+
+function card(d, idx) {
+  const el = document.createElement('div');
+  el.className = 'card' + ((d.x || 0) >= 2 ? ' outlier' : '');
+  el.style.animationDelay = Math.min(idx % PAGE, 14) * 30 + 'ms';
+  el.draggable = true;
+  el.ondragstart = e => {
+    dragRec = d.id;
+    e.dataTransfer.effectAllowed = 'move';
+    el.classList.add('lifting');
+    document.body.classList.add('dragging');
+  };
+  el.ondragend = () => {
+    el.classList.remove('lifting');
+    document.body.classList.remove('dragging');
+    dragRec = null;
+  };
+  const typeIcon = d.video ? 'video' : (d.type === 'Carousel' ? 'layers' : 'image');
+  const days = d.days, horse = d.horse;
+  const ago = days === null ? '' : (days === 0 ? '今天' : days + '天前');
+  const lines = (d.caption || '').split('\n').map(l => l.trim()).filter(Boolean);
+  const hook = lines[0] || '';
+  const tr = (d.transcript && d.transcript !== '(转录失败)' && d.transcript !== '(无口播内容)') ? d.transcript : '';
+  el.innerHTML = `
+    <div class="embed" data-pid="${d.id}"><div class="ph"><svg class="ic"><use href="#i-${typeIcon}"/></svg></div></div>
+    <div class="meta">
+      <div class="row1">
+        <span class="handle" title="拖到上方 tab 即可归类">${I('grip')}</span>
+        <a class="who" href="https://www.instagram.com/${d.competitor}/" target="_blank">@${d.competitor}</a>
+        <span class="badge">${d.type || '-'}</span>
+        ${days !== null && days <= 7 ? '<span class="badge bnew">' + I('star') + '新帖</span>' : ''}
+        ${horse ? '<span class="badge bhorse">' + I('zap') + '黑马</span>' : ''}
+        ${d.bait ? '<span class="badge bbait" title="「留言XX」引流打法 — 评论被引流放大,漏斗设计值得学">' + I('magnet') + '引流</span>' : ''}
+        <span class="date" title="${d.date || ''}">${ago}</span>
+      </div>
+      <div class="nums">
+        <span class="num hot" title="Viral Score">${I('flame')}<b>${d.score}</b></span>
+        ${(d.x || 0) >= 2 ? '<span class="num x" title="是自家平均热度的多少倍">' + I('trend') + '<b>×' + d.x + '</b></span>' : ''}
+        <span class="num er" title="Engagement Rate">${I('pct')}<b>${d.er}%</b></span>
+        <span class="num" title="Likes">${I('heart')}<b>${d.likes > 0 ? fmt(d.likes) : '隐藏'}</b></span>
+        <span class="num" title="Comments">${I('msg')}<b>${fmt(d.comments)}</b></span>
+        <span class="num" title="Followers">${I('users')}<b>${fmt(d.followers)}</b></span>
+      </div>
+      <div class="cap" onclick="this.classList.toggle('open')"></div>
+      ${d.brk ? '<div class="ai" onclick="this.classList.toggle(&quot;open&quot;)"></div>' : ''}
+      ${d.my ? '<div class="mine" onclick="this.classList.toggle(&quot;open&quot;)"></div>' : ''}
+      <div class="srow"><label>状态</label><select class="status btn s${d.status}"></select>
+        <button class="abtn copy" title="复制完整文案">${I('copy')}文案</button>
+        ${tr ? '<button class="abtn mic" title="复制视频口播逐字稿">' + I('mic') + '口播</button>' : ''}
+        ${d.my ? '<button class="abtn minec" title="复制我的改写口播稿(可直接拍)">' + I('mic') + '我的稿</button>' : ''}
+        <button class="abtn brief" title="复制拍摄 Brief(数据+Hook+AI拆解+我的稿+口播稿+文案)">${I('clip')}Brief</button>
+        <a class="abtn" href="${d.url}" target="_blank" title="打开 Instagram 原帖">${I('ext')}</a></div>
+    </div>`;
+  const capEl = el.querySelector('.cap');
+  const restTxt = lines.slice(1).join('\n');
+  capEl.innerHTML = hook ? '<b>' + esc(hook) + '</b>' + (restTxt ? '<br>' + esc(restTxt).replace(/\n/g, '<br>') : '') : '';
+  const aiEl = el.querySelector('.ai');
+  if (aiEl) aiEl.innerHTML = '<b>💡 AI 拆解</b><br>' + esc(d.brk).split(String.fromCharCode(10)).join('<br>');
+  const myEl = el.querySelector('.mine');
+  if (myEl) myEl.innerHTML = '<b>🎬 我的版本(可直接拍)</b><br>' + esc(d.my).split(String.fromCharCode(10)).join('<br>');
+  const sel = el.querySelector('.status');
+  STATUSES.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; sel.appendChild(o); });
+  sel.value = d.status;
+  sel.onchange = () => setStatus(d, sel.value);
+  el.querySelector('.copy').onclick = () =>
+    navigator.clipboard.writeText(d.caption || '').then(() => toast('✓ 文案已复制', true));
+  const micBtn = el.querySelector('.mic');
+  if (micBtn) micBtn.onclick = () =>
+    navigator.clipboard.writeText(tr).then(() => toast('✓ 口播稿已复制', true));
+  const mineBtn = el.querySelector('.minec');
+  if (mineBtn) mineBtn.onclick = () =>
+    navigator.clipboard.writeText(d.my).then(() => toast('✓ 我的改写稿已复制', true));
+  el.querySelector('.brief').onclick = () => {
+    const NL = String.fromCharCode(10);
+    const parts = ['🎬 爆款参考 @' + d.competitor + ((d.x || 0) >= 2 ? '(自家平均 ×' + d.x + ')' : ''),
+      '📊 🔥' + d.score + ' | ER ' + d.er + '% | ❤️ ' + (d.likes > 0 ? fmt(d.likes) : '隐藏') +
+      ' | 💬 ' + fmt(d.comments) + ' | 👥 ' + fmt(d.followers) + (ago ? ' | ' + ago : ''),
+      '🔗 ' + d.url, '✍️ Hook: ' + hook];
+    if (d.brk) parts.push('——— AI 拆解 ———', d.brk);
+    if (d.my) parts.push('——— 我的版本(可直接拍)———', d.my);
+    if (tr) parts.push('——— 竞对原口播稿 ———', tr);
+    parts.push('——— 完整文案 ———', d.caption || '');
+    navigator.clipboard.writeText(parts.join(NL)).then(() => toast('✓ Brief 已复制,可直接发给拍摄/剪辑', true));
+  };
+  io.observe(el.querySelector('.embed'));
+  return el;
+}
+
+function render() {
+  renderTabs();
+  const arr = filtered();
+  const grid = $('grid'); grid.innerHTML = '';
+  arr.slice(0, shown).forEach((d, i) => grid.appendChild(card(d, i)));
+  $('empty').style.display = arr.length ? 'none' : '';
+  $('moreWrap').style.display = arr.length > shown ? '' : 'none';
+}
+
+
+function applyStatusCache() {
+  try {
+    const c = JSON.parse(localStorage.getItem('st_cache') || '{}');
+    Object.keys(c).forEach(rid => { const d = byRec[rid]; if (d) d.status = c[rid]; });
+  } catch (e) {}
+}
+
+function cacheStatus(rid, val) {
+  try {
+    const c = JSON.parse(localStorage.getItem('st_cache') || '{}');
+    c[rid] = val; localStorage.setItem('st_cache', JSON.stringify(c));
+  } catch (e) {}
+}
+
+// live status refresh (so weekly-baked page shows current statuses)
+async function refreshStatuses() {
+  applyStatusCache(); render();  // last-known statuses first
+  if (Date.now() - (+localStorage.getItem('st_ts') || 0) < 600000) return;  // 10-min throttle
+  localStorage.setItem('st_ts', String(Date.now()));
+  const fresh = {};
+  try {
+    const r = await fetch(SUPA + '/rest/v1/posts?select=post_id,status', { headers: { 'apikey': ANON } });
+    if (!r.ok) return;
+    (await r.json()).forEach(row => {
+      const d = byRec[row.post_id];
+      if (d) d.status = row.status || '未处理';
+      if (row.status && row.status !== '未处理') fresh[row.post_id] = row.status;
+    });
+    localStorage.setItem('st_cache', JSON.stringify(fresh));
+    render();
+  } catch (e) {}
+}
+
+['fTracker','fComp','fSort'].forEach(id => $(id).onchange = () => { shown = PAGE; render(); });
+$('fSearch').oninput = () => { shown = PAGE; render(); };
+$('fVideo').onclick = () => { videoOnly = !videoOnly; $('fVideo').classList.toggle('on', videoOnly); shown = PAGE; render(); };
+$('moreBtn').onclick = () => { shown += PAGE; render(); };
+
+// preset quick filters
+$('presets').innerHTML = '<span class="lbl">快筛</span>';
+PRESETS.forEach(p => {
+  const c = document.createElement('span'); c.className = 'chip2';
+  c.innerHTML = I(p.icon) + esc(p.label);
+  c.onclick = () => { presetOn[p.k] = !presetOn[p.k]; c.classList.toggle('on', presetOn[p.k]); shown = PAGE; render(); };
+  $('presets').appendChild(c);
+});
+
+// trending hashtags among outlier posts
+if (TRENDS.length) {
+  $('trends').innerHTML = '<span class="lbl">爆款热词</span>';
+  TRENDS.forEach(([tag, n]) => {
+    const c = document.createElement('span'); c.className = 'chip2';
+    c.textContent = '#' + tag + ' ' + n;
+    c.onclick = () => { $('fSearch').value = $('fSearch').value === tag ? '' : tag; shown = PAGE; render(); };
+    $('trends').appendChild(c);
+  });
+} else { $('trends').style.display = 'none'; }
+
+render();
+refreshStatuses();
+</script>
+</body>
+</html>
